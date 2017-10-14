@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">qualtechassignment</string>
+    <string name="listing_screen_title">Countries</string>
+    <string name="details_screen_title">Country Details</string>
+    <string name="add_country_screen_title">Add Country</string>
+
+    <string name="label_country">Country: </string>
+    <string name="label_alpha2Code">Alpha2Code: </string>
+    <string name="label_alpha3Code">Alpha3Code: </string>
+    <string name="label_capital">Capital: </string>
+    <string name="label_region">Region: </string>
+    <string name="label_subregion">Subregion: </string>
+    <string name="label_population">Population: </string>
+    <string name="label_demonym">Demonym: </string>
+    <string name="label_area">Area: </string>
+    <string name="label_gini">Gini: </string>
+    <string name="label_nativeName">NativeName: </string>
+    <string name="label_numericCode">NumericCode: </string>
+    <string name="label_relevance">Relevance: </string>
+    <string name="label_border">Borders: </string>
+    <string name="label_currency">Currency: </string>
+    <string name="label_language">Language: </string>
+    <string name="label_add">Add</string>
+    <string name="label_update">Update</string>
+    <string name="label_delete">Delete</string>
+    <string name="label_camera">Camera</string>
+    <string name="label_sms">Call</string>
+
+    <string name="add_error_message">Something went wrong while adding country</string>
+    <string name="update_error_message">Something went wrong while updating country</string>
+    <string name="delete_error_message">Something went wrong while deleting country</string>
+    <string name="string_title_call_phone">Calling Permission</string>
+    <string name="string_messgae_phone">Grant this permission for making the phone call</string>
+    <string name="string_title_camera">Camera Permission</string>
+    <string name="string_messgae_camera">Grant this permission for taking pictures from camera</string>
+
 </resources>

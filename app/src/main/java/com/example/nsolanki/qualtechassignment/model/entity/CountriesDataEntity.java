@@ -1,20 +1,23 @@
-package entity;
+package com.example.nsolanki.qualtechassignment.model.entity;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by nsolanki on 10/14/2017.
- */
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CountriesDataEntity {
+public class CountriesDataEntity implements Parcelable {
 
     public static final String TAG = CountriesDataEntity.class.getCanonicalName();
+
+    /*Using this field to uniquley identify the data from other tables*/
+    int countryId;
 
     @JsonProperty("name")
     String countryName;
@@ -50,10 +53,10 @@ public class CountriesDataEntity {
     String nativeName;
 
     @JsonProperty("numericCode")
-    int numericCode;
+    String numericCode;
 
     @JsonProperty("relevance")
-    int relevance;
+    String relevance;
 
     @JsonProperty("topLevelDomain")
     List<TopLevelDomainDataEntity> mTopLevelDomainDataEntityList;
@@ -82,6 +85,104 @@ public class CountriesDataEntity {
     @JsonProperty("translations")
     TranslationsEntity mTranslationsEntity;
 
+    public CountriesDataEntity() {
+        this.mTopLevelDomainDataEntityList = new ArrayList<>();
+        this.mCallingCodesDataEntityList = new ArrayList<>();
+        this.mAlternateSpellingsDataEntityList = new ArrayList<>();
+        this.mLatLngDataEntityList = new ArrayList<>();
+        this.mTimeZonesDataEntityList = new ArrayList<>();
+        this.mBorderCountriesDataEntityList = new ArrayList<>();
+        this.mCurrenciesDataEntityList = new ArrayList<>();
+        this.mLanguagesDataEntityList = new ArrayList<>();
+    }
+
+    protected CountriesDataEntity(Parcel in) {
+        countryName = in.readString();
+        alpha2Code = in.readString();
+        alpha3Code = in.readString();
+        capital = in.readString();
+        region = in.readString();
+        subRegion = in.readString();
+        if (in.readByte() == 0) {
+            population = null;
+        } else {
+            population = in.readLong();
+        }
+        demonym = in.readString();
+        if (in.readByte() == 0) {
+            area = null;
+        } else {
+            area = in.readLong();
+        }
+        gini = in.readFloat();
+        nativeName = in.readString();
+        numericCode = in.readString();
+        relevance = in.readString();
+        mTopLevelDomainDataEntityList = in.createTypedArrayList(TopLevelDomainDataEntity.CREATOR);
+        mCallingCodesDataEntityList = in.createTypedArrayList(CallingCodesDataEntity.CREATOR);
+        mAlternateSpellingsDataEntityList = in.createTypedArrayList(AlternateSpellingsDataEntity.CREATOR);
+        mLatLngDataEntityList = in.createTypedArrayList(LatLngDataEntity.CREATOR);
+        mTimeZonesDataEntityList = in.createTypedArrayList(TimeZonesDataEntity.CREATOR);
+        mBorderCountriesDataEntityList = in.createTypedArrayList(BorderCountriesDataEntity.CREATOR);
+        mCurrenciesDataEntityList = in.createTypedArrayList(CurrenciesDataEntity.CREATOR);
+        mLanguagesDataEntityList = in.createTypedArrayList(LanguagesDataEntity.CREATOR);
+        mTranslationsEntity = in.readParcelable(TranslationsEntity.class.getClassLoader());
+        countryId = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(countryName);
+        dest.writeString(alpha2Code);
+        dest.writeString(alpha3Code);
+        dest.writeString(capital);
+        dest.writeString(region);
+        dest.writeString(subRegion);
+        if (population == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(population);
+        }
+        dest.writeString(demonym);
+        if (area == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(area);
+        }
+        dest.writeFloat(gini);
+        dest.writeString(nativeName);
+        dest.writeString(numericCode);
+        dest.writeString(relevance);
+        dest.writeTypedList(mTopLevelDomainDataEntityList);
+        dest.writeTypedList(mCallingCodesDataEntityList);
+        dest.writeTypedList(mAlternateSpellingsDataEntityList);
+        dest.writeTypedList(mLatLngDataEntityList);
+        dest.writeTypedList(mTimeZonesDataEntityList);
+        dest.writeTypedList(mBorderCountriesDataEntityList);
+        dest.writeTypedList(mCurrenciesDataEntityList);
+        dest.writeTypedList(mLanguagesDataEntityList);
+        dest.writeParcelable(mTranslationsEntity, flags);
+        dest.writeInt(countryId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<CountriesDataEntity> CREATOR = new Creator<CountriesDataEntity>() {
+        @Override
+        public CountriesDataEntity createFromParcel(Parcel in) {
+            return new CountriesDataEntity(in);
+        }
+
+        @Override
+        public CountriesDataEntity[] newArray(int size) {
+            return new CountriesDataEntity[size];
+        }
+    };
 
     public String getCountryName() {
         return countryName;
@@ -171,19 +272,19 @@ public class CountriesDataEntity {
         this.nativeName = nativeName;
     }
 
-    public int getNumericCode() {
+    public String getNumericCode() {
         return numericCode;
     }
 
-    public void setNumericCode(int numericCode) {
+    public void setNumericCode(String numericCode) {
         this.numericCode = numericCode;
     }
 
-    public int getRelevance() {
+    public String getRelevance() {
         return relevance;
     }
 
-    public void setRelevance(int relevance) {
+    public void setRelevance(String relevance) {
         this.relevance = relevance;
     }
 
@@ -257,5 +358,21 @@ public class CountriesDataEntity {
 
     public void setTranslationsEntity(TranslationsEntity translationsEntity) {
         mTranslationsEntity = translationsEntity;
+    }
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    public boolean isDataEmpty() {
+        return countryName.isEmpty() && alpha2Code.isEmpty() && alpha3Code.isEmpty() && capital.isEmpty() && region.isEmpty() && subRegion.isEmpty()
+                && population == 0l && demonym.isEmpty() && area == 0l && gini == 0.0f && nativeName.isEmpty() && numericCode.isEmpty() && relevance.isEmpty()
+                && mTopLevelDomainDataEntityList.isEmpty() && mCallingCodesDataEntityList.isEmpty() && mAlternateSpellingsDataEntityList.isEmpty()
+                && mLatLngDataEntityList.isEmpty() && mTimeZonesDataEntityList.isEmpty() && mBorderCountriesDataEntityList.isEmpty()
+                && mCurrenciesDataEntityList.isEmpty() && mLanguagesDataEntityList.isEmpty();
     }
 }
